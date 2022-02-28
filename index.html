@@ -11,12 +11,11 @@
 </head>
 
 <body>
-
    <section>
       <div class="container">
-         <div class="cart">
+         <div class="cart" >
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div id="phone" class="cart-item">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
@@ -30,12 +29,12 @@
                            <button id="btnTwo" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="phoneAmount">1219</span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <img src="images/remove.png" alt="" class="remove-item" id="phone-remove">
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="case">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -44,12 +43,12 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="btnThree" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
+                           <input id="caseValue" type="text" class="form-control text-center" value="1">
                            <button id="btnFour" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$ <span id="caseAmount">59</span></h5>
+                        <img id="case-remove" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -58,15 +57,15 @@
                   <div class="row">
 
                      <div class="col-md-8">
-                        <h5>Subtotal: </h5>
+                        <h5> Subtotal: </h5>
                         <h5>Tax:</h5>
-                        <h5>Total:</h5>
+                        <h5> Total:</h5>
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="subTotal">1,278</span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="total"> 1,278</span></h5>
                      </div>
                   </div>
                </div>
@@ -79,27 +78,46 @@
    </section>
    <script>
 
-   document.getElementById('btnTwo').addEventListener('click', function(){
-      // productNumber = parseInt(productNumber) + 1;
-      // document.getElementById('productValue').value = productNumber;
-      UpdateProductAmount('productValue', 1);
-      let productNumber = document.getElementById('productValue').value;
+      // item removwe
+      document.getElementById('phone-remove').addEventListener('click', function () {
+         document.getElementById('phone').style.display = 'none';
+      
+      })
+      document.getElementById('case-remove').addEventListener('click', function () {
+         document.getElementById('case').style.display = 'none';
+      
+      })
 
-      // updatePhoneAmount('phoneAmount', productNumber);
-      // console.log(typeof productNumber);
-      updatePhoneAmount('phoneAmount', productNumber);
+
+      document.getElementById('btnTwo').addEventListener('click', function(){
+         UpdateProductAmount('productValue', 1);
+         let productNumber = document.getElementById('productValue').value;
+         updatePhoneAmount('phoneAmount', productNumber);
+         totalAmount();
    })
 
-   document.getElementById('btnOne').addEventListener('click', function(){
-      // productNumber = parseInt(productNumber) - 1;
-      // document.getElementById('productValue').value = productNumber;
-      UpdateProductAmount('productValue', -1);
-      let productNumber = document.getElementById('productValue').value;
-
-      updatePhoneAmount('phoneAmount', productNumber);
+      document.getElementById('btnOne').addEventListener('click', function(){
+         UpdateProductAmount('productValue', -1);
+         let productNumber = document.getElementById('productValue').value;
+         updatePhoneAmount('phoneAmount', productNumber);
+         totalAmount();
    })
+      document.getElementById('btnFour').addEventListener('click', function(){
+         UpdateProductAmount('caseValue', 1);
+         let productNumber = document.getElementById('caseValue').value;
+         updateCaseAmount('caseAmount', productNumber);
+         totalAmount();
+      })
+
+      document.getElementById('btnThree').addEventListener('click', function(){
+         UpdateProductAmount('caseValue', -1);
+         let productNumber = document.getElementById('caseValue').value;
+         updateCaseAmount('caseAmount', productNumber);
+         totalAmount();
+      })
+
    function UpdateProductAmount(id, decrease){
-      var productNumber = document.getElementById(id).value;
+      let productNumber = document.getElementById(id).value;
       productNumber = parseInt(productNumber) + 1*decrease;
       document.getElementById(id).value = productNumber;
    }
@@ -107,6 +125,22 @@
    function updatePhoneAmount(id, productNumber){
       phoneAmountNumber = 1219 * productNumber;
       document.getElementById(id).innerText = phoneAmountNumber;
+   }
+   function updateCaseAmount(id, productNumber) {
+      caseAmountNumber = 59 * productNumber;
+      document.getElementById(id).innerText = caseAmountNumber;
+   }
+
+
+   
+   function totalAmount(){
+      let phoneAmountNumber = Number(document.getElementById('phoneAmount').innerText);
+      let caseAmountNumber = Number(document.getElementById('caseAmount').innerText);
+      let sTotal = phoneAmountNumber + caseAmountNumber;
+      console.log(phoneAmountNumber);
+      // sTotal = parseInt(sTotal);
+      document.getElementById('total').innerText = sTotal;
+      document.getElementById('subTotal').innerText = sTotal;
    }
 
    </script>
